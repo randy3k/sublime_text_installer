@@ -1,0 +1,2 @@
+[![Build Status](https://travis-ci.org/randy3k/sublime_text_installer.svg?branch=master)](https://travis-ci.org/randy3k/sublime_text_installer)
+[![Build status](https://ci.appveyor.com/api/projects/status/yw90t8iiwgv9c6gp/branch/master?svg=true)](https://ci.appveyor.com/project/randy3k/sublime-text-installer/branch/master)

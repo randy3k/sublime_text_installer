@@ -1,8 +1,8 @@
 #! /usr/bin/env bash
 
-BASE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+set -e
 
-while [[ $# > 1 ]]; do
+while [ "$#" -ne 0 ]; do
     key="$1"
     case "$key" in
         --st)
@@ -39,29 +39,34 @@ if [ ! -f "$PC_PATH" ]; then
     wget -O "$PC_PATH" "$PC_URL"
 fi
 
-PCI_PATH="$STP/0_package_control_helper"
+PCH_PATH="$STP/0_install_package_control_helper"
 
-if [ ! -d "$PCI_PATH" ]; then
-    mkdir -p "$PCI_PATH"
-    cp "$BASE"/helper.py "$PCI_PATH"/helper.py
+if [ ! -d "$PCH_PATH" ]; then
+    mkdir -p "$PCH_PATH"
+    BASE=`dirname $0`
+    cp "$BASE"/helper.py "$PCH_PATH"/helper.py
 fi
 
-if [ $(uname) = 'Darwin' ]; then
-    if [ $SUBLIME_TEXT_VERSION -eq 2 ]; then
-        osascript -e 'tell application "Sublime Text 2" to activate'
-    elif [ $SUBLIME_TEXT_VERSION -eq 3 ]; then
-        osascript -e 'tell application "Sublime Text" to activate'
+
+# launch sublime text in background
+( (subl & ) &)
+
+ENDTIME=$(( $(date +%s) + 60 ))
+while true  ; do
+    printf "."
+    [ -f "$PCH_PATH/success" ] && break
+    if [ $(date +%s) -gt $ENDTIME ]; then
+        echo ""
+        pkill "[Ss]ubl"
+        sleep 2
+        rm -rf "$PCH_PATH"
+        echo "Timeout: Fail to install Package Control."
+        exit 1
     fi
-else
-    subl
-fi
-
-Pref="$STP/User/Preferences.sublime-settings"
-
-until [ -f "$Pref" ] && grep 0_package_control_helper "$Pref" > /dev/null ; do
-    echo -n "."
     sleep 5
 done
 
 sleep 2
-echo -e "\nPackage Control installed."
+echo ""
+rm -rf "$PCH_PATH"
+echo "Package Control installed."

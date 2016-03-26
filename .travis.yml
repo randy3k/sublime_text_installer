@@ -1,0 +1,25 @@
+os:
+    - linux
+    - osx
+
+sudo: required
+
+env:
+    matrix:
+        - SUBLIME_TEXT_VERSION="2"
+        - SUBLIME_TEXT_VERSION="3"
+
+install:
+    - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+        export DISPLAY=:99.0;
+        sh -e /etc/init.d/xvfb start;
+      fi
+
+script:
+    - sh install_sublime_text.sh
+    - sh install_package_control.sh
+
+notifications:
+    email:
+        on_success: change
+        on_failure: change
