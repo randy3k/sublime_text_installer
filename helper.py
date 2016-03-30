@@ -5,9 +5,6 @@ import os
 
 
 def plugin_loaded():
-    # safeguard
-    if "0_install_package_control_helper" not in os.path.abspath(__file__):
-        return
 
     pc_settings = sublime.load_settings("Package Control.sublime-settings")
 
