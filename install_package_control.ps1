@@ -1,13 +1,7 @@
 [CmdletBinding()]
-param(
-    [int]$st = ${env:SUBLIME_TEXT_VERSION}
-)
+Param()
 
 try{
-    if (-not $st) {
-        throw "Missing Sublime Text version"
-    }
-
     $STP = "C:\st\Data\Packages"
     New-Item -itemtype directory $STP -force >$null
 

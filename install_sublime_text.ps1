@@ -23,7 +23,7 @@ try{
     $url = [System.Uri]::EscapeUriString($url)
     $filename = Split-Path $url -leaf
 
-    write-verbose "installing sublime text ${env:SUBLIME_TEXT_VERSION}"
+    write-verbose "installing sublime text $st"
     (New-Object System.Net.WebClient).DownloadFile($url, "${env:Temp}\$filename")
 
     Add-Type -AssemblyName System.IO.Compression.FileSystem
