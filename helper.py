@@ -11,19 +11,19 @@ def plugin_loaded():
     def kill_subl(restart=False):
         if sublime.platform() == "osx":
             if sublime.version() > "3000":
-                cmd = "sleep 1; killall 'Sublime Text'; sleep 1; "
+                cmd = "sleep 1; killall 'Sublime Text'; sleep 3; "
                 if restart:
                     cmd = cmd + "osascript -e 'tell application \"Sublime Text\" to activate'"
             else:
-                cmd = "sleep 1; killall 'Sublime Text 2'; sleep 1; "
+                cmd = "sleep 1; killall 'Sublime Text 2'; sleep 3; "
                 if restart:
                     cmd = cmd + "osascript -e 'tell application \"Sublime Text 2\" to activate'"
         elif sublime.platform() == "linux":
-            cmd = "sleep 1; killall 'sublime_text'; sleep 1; "
+            cmd = "sleep 1; killall 'sublime_text'; sleep 3; "
             if restart:
                 cmd = cmd + "subl"
         elif sublime.platform() == "windows":
-            cmd = "sleep 1 & taskkill /F /im sublime_text.exe & sleep 1 "
+            cmd = "sleep 1 & taskkill /F /im sublime_text.exe & sleep 3 "
             if restart:
                 cmd = cmd + "& \"C:\\st\\sublime_text.exe\""
 
