@@ -22,7 +22,7 @@ def plugin_loaded():
             if sublime.version() > "3000":
                 cmd = "sleep 1; killall 'subl'; sleep 1; "
             else:
-                cmd = "sleep 1; killall 'sublime_text'; sleep 1; "
+                cmd = "sleep 1; killall 'subl'; sleep 1; "
             if restart:
                 cmd = cmd + "subl"
         elif sublime.platform() == "windows":

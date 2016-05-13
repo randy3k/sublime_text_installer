@@ -9,6 +9,8 @@ try{
         throw "Missing Sublime Text version"
     }
 
+    write-verbose "installing sublime text $st"
+
     $url = $null
     foreach ( $link in (Invoke-WebRequest "http://www.sublimetext.com/$st" -UseBasicParsing).Links ) {
         if ( $link.href.endsWith("x64.zip") ) {
@@ -20,10 +22,11 @@ try{
         throw "could not download Sublime Text binary"
     }
 
+    write-verbose "downloading $url"
+
     $url = [System.Uri]::EscapeUriString($url)
     $filename = Split-Path $url -leaf
 
-    write-verbose "installing sublime text $st"
     (New-Object System.Net.WebClient).DownloadFile($url, "${env:Temp}\$filename")
 
     Add-Type -AssemblyName System.IO.Compression.FileSystem
