@@ -49,7 +49,7 @@ fi
 
 
 # launch sublime text in background
-( (subl & ) &)
+subl &
 
 ENDTIME=$(( $(date +%s) + 60 ))
 while true  ; do

@@ -19,7 +19,10 @@ def plugin_loaded():
                 if restart:
                     cmd = cmd + "osascript -e 'tell application \"Sublime Text 2\" to activate'"
         elif sublime.platform() == "linux":
-            cmd = "sleep 1; killall 'sublime_text'; sleep 1; "
+            if sublime.version() > "3000":
+                cmd = "sleep 1; killall 'subl'; sleep 1; "
+            else:
+                cmd = "sleep 1; killall 'sublime_text'; sleep 1; "
             if restart:
                 cmd = cmd + "subl"
         elif sublime.platform() == "windows":
@@ -66,7 +69,7 @@ def plugin_loaded():
 
         _check_dependencies()
 
-    if not os.path.exists(os.path.join(sublime.packages_path(), 
+    if not os.path.exists(os.path.join(sublime.packages_path(),
         "0_install_package_control_helper", "bootstrapped")):
         check_bootstrap()
     else:
