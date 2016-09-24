@@ -58,14 +58,18 @@ def plugin_loaded():
         manager = package_control.package_manager.PackageManager()
         required_dependencies = set(manager.find_required_dependencies())
 
+        class myPackageCleanup(package_control.package_cleanup.PackageCleanup):
+
+            def finish(self, installed_packages, found_packages, found_dependencies):
+                missing_dependencies = required_dependencies - set(found_dependencies)
+                if len(missing_dependencies) == 0:
+                    touch("success")
+                    kill_subl()
+                else:
+                    sublime.set_timeout(_check_dependencies, 20)
+
         def _check_dependencies():
-            installed_dependencies = set(manager.list_dependencies())
-            missing_dependencies = required_dependencies - installed_dependencies
-            if len(missing_dependencies) == 0:
-                touch("success")
-                kill_subl()
-            else:
-                sublime.set_timeout(_check_dependencies, 20)
+            myPackageCleanup().run()
 
         _check_dependencies()
 
