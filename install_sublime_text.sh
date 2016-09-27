@@ -41,8 +41,9 @@ if [ $(uname) = 'Darwin'  ]; then
         curl "$URL" -o ~/Downloads/sublimetext.dmg
         hdiutil attach ~/Downloads/sublimetext.dmg
         cp -r "/Volumes/$SUBLIME_TEXT/$SUBLIME_TEXT.app" "$HOME/Applications/$SUBLIME_TEXT.app"
-        sudo ln -s "$HOME/Applications/$SUBLIME_TEXT.app/Contents/SharedSupport/bin/subl" \
-            /usr/local/bin/subl
+        mkdir -p $HOME/.local/bin
+        ln -s "$HOME/Applications/$SUBLIME_TEXT.app/Contents/SharedSupport/bin/subl" \
+            $HOME/.local/bin/subl
         # make `subl` available
         open "$HOME/Applications/$SUBLIME_TEXT.app"
         sleep 2
@@ -69,7 +70,8 @@ else
         fi
         curl "$URL" -o ~/Downloads/sublimetext.tar.bz2
         tar jxfv ~/Downloads/sublimetext.tar.bz2 -C ~/Downloads/
-        sudo ln -sf "$HOME/Downloads/$SUBLIME_TEXT/sublime_text" /usr/bin/subl
+        mkdir -p $HOME/.local/bin
+        ln -sf "$HOME/Downloads/$SUBLIME_TEXT/sublime_text" $HOME/.local/bin/subl
         # make `subl` available
         "$HOME/Downloads/$SUBLIME_TEXT/sublime_text" &
         sleep 2

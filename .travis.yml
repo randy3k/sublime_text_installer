@@ -2,8 +2,6 @@ os:
     - linux
     - osx
 
-sudo: required
-
 env:
     matrix:
         - SUBLIME_TEXT_VERSION="2"
